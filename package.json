@@ -4,7 +4,10 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
+        "heroku-start": "npm run build && npm run start-js",
         "start": "node src/server.ts",
+        "start-js": "node dist/server.js",
+        "build-ts": "tsc",
         "build": "babel src --extensions \".ts\" --out-dir dist --copy-files",
         "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
     },
