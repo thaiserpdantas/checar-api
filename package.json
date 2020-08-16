@@ -4,16 +4,15 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "heroku-start": "npm run build && npm run start-js",
-        "start": "node src/server.ts",
-        "start-js": "node dist/server.js",
+        "heroku-start": "npm run build && npm run start",
+        "start": "babel-node dist/server.js",
+        "start-ts": "node src/server.ts",
         "build-ts": "tsc",
         "build": "babel src --extensions \".ts\" --out-dir dist --copy-files",
         "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
     },
     "dependencies": {
         "@types/uuid": "^8.3.0",
-        "babel-cli": "^6.26.0",
         "express": "^4.17.1",
         "uuid": "^8.3.0"
     },
