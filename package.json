@@ -9,7 +9,7 @@
         "start-ts": "node src/server.ts",
         "build-ts": "tsc",
         "build": "babel src --extensions \".ts\" --out-dir dist --copy-files",
-        "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
+        "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
     },
     "dependencies": {
         "@types/uuid": "^8.3.0",
