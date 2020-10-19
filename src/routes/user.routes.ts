@@ -1,35 +1,35 @@
 import { Router } from 'express';
-
-import { v4 as uuid } from 'uuid';
+import { getCustomRepository } from 'typeorm';
+import UsersRepository from '../repositories/UsersRepository';
+import CreateUserService from '../services/CreateUserService';
 
 const userRoutes = Router();
 
-// userRoutes.post('/', (request, response) => {
-//     return response.json({ message: 'Hello World' });
-// });
+userRoutes.get('/', async (request, response) => {
+    const usersRepository = getCustomRepository(UsersRepository);
+    const users = await usersRepository.find();
 
-const users: any[] = [];
-
-userRoutes.get('/', (request, response) => {
-    const { title } = request.query;
-
-    const results = title
-        ? users.filter(user => user.title.includes(title))
-        : users;
-
-    return response.json(results);
+    return response.json(users);
 });
 
-userRoutes.post('/', (request, response) => {
-    const { name, email } = request.body;
+userRoutes.post('/', async (request, response) => {
+    try {
+        const { name, email } = request.body;
 
-    const user = { id: uuid(), name, email };
-    users.push(user);
+        const createUserService = new CreateUserService();
 
-    const { body } = request;
-    console.log(body);
+        const user = await createUserService.execute({
+            name,
+            email
+        })
 
-    return response.json(user);
+        const { body } = request;
+        console.log(body);
+
+        return response.json(user);
+    } catch (error) {
+        return response.status(400).json({ error: error.message });
+    }
 });
 
 export default userRoutes;
